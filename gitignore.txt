@@ -1,0 +1,10 @@
+# Ignore all virtual environments
+venv/
+.env/
+.env*/ 
+
+# Ignore all video files
+*.mp4
+*.mov
+*.avi
+*.mkv
