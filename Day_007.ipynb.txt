@@ -1,0 +1,161 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": []
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "code",
+      "source": [
+        "with open('sample.txt','w') as f:\n",
+        "  f.write(\"This text is going to convert into audio\")"
+      ],
+      "metadata": {
+        "id": "nFO-J8HZG2j1"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "from gtts import gTTS\n",
+        "from IPython.display import display,Audio\n",
+        "text = open(\"sample.txt\").read()\n",
+        "tts = gTTS(text=text,lang = 'en')\n",
+        "tts.save(\"sample_audio.mp3\")\n",
+        "\n",
+        "display(Audio('sample_audio.mp3',autoplay=False))"
+      ],
+      "metadata": {
+        "id": "n0wLwJuIG2gN"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "convert mp3 to wav"
+      ],
+      "metadata": {
+        "id": "0uRJPryEHuRl"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "subprocess.run([\"ffmpeg\", \"-y\", \"-i\", \"sample_audio.mp3\", \"-ar\", \"16000\", \"-ac\", \"1\", \"audio.wav\"],\n",
+        "               stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)\n",
+        "print(\"Converted to audio.wav (16k mono)\")"
+      ],
+      "metadata": {
+        "id": "bPhJgIQ9G2de"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "converting female voice to male voice"
+      ],
+      "metadata": {
+        "id": "gFJK2zGYG-eG"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "!pip install TTS"
+      ],
+      "metadata": {
+        "id": "8uxaUC6BG2ah"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "from TTS.api import TTS\n",
+        "\n",
+        "tts = TTS(\"tts_models/en/ljspeech/glow-tts\").to('cpu')\n",
+        "\n",
+        "text = \"Hello this is an exmaple of a male voice.\"\n",
+        "\n",
+        "tts.tts_to_file(text=text,file_path='male_voice.wav')\n"
+      ],
+      "metadata": {
+        "id": "HyR_eiRhG2Xq"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "Downloading AMI sample data"
+      ],
+      "metadata": {
+        "id": "thcgr0nkHUNX"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "!mkdir -p ami_sample\n",
+        "!wget -q https://groups.inf.ed.ac.uk/ami/AMICorpusSamples/ES2002a.Mix-Headset.wav -O ami_sample/ES2002a.wav\n",
+        "\n",
+        "print(\"Downloaded AMI sample file:\")\n",
+        "!ls -lh ami_sample\n"
+      ],
+      "metadata": {
+        "id": "ee5XLbVEG2Ux"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "Load the ami sample"
+      ],
+      "metadata": {
+        "id": "2vm9AZ9bHi46"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "from IPython.display import Audio\n",
+        "\n",
+        "Audio(\"ami_sample/ES2002a.wav\")\n"
+      ],
+      "metadata": {
+        "id": "CM5FmgdxG2Rp"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "MSlF53EWGxIR"
+      },
+      "outputs": [],
+      "source": []
+    }
+  ]
+}
